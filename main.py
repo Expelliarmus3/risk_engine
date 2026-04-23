@@ -23,8 +23,12 @@ model = joblib.load('risk_engine_model.pkl')
 
 # Initialize Firebase (Ensure serviceAccountKey.json is in the folder)
 if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
-    firebase_admin.initialize_app(cred)
+    if os.path.exists("serviceAccountKey.json"):
+        cred = credentials.Certificate("serviceAccountKey.json")
+        firebase_admin.initialize_app(cred)
+    else:
+        # If running on Google Cloud Run, it uses the default credentials automatically
+        firebase_admin.initialize_app()
 db = firestore.client()
 
 @app.get("/")
