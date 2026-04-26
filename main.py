@@ -16,7 +16,7 @@ class ShipmentRequest(BaseModel):
     dest_lon: float
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["https://risk-engine-theta.vercel.app/"], allow_methods=["*"], allow_headers=["*"])
 
 # Load ML Model
 model = joblib.load('risk_engine_model.pkl')
