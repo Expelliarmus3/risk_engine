@@ -16,7 +16,7 @@ class ShipmentRequest(BaseModel):
     dest_lon: float
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["https://risk-engine-kyjv.vercel.app/"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True,allow_methods=["*"], allow_headers=["*"])
 
 # Load ML Model
 model = joblib.load('risk_engine_model.pkl')
@@ -35,7 +35,7 @@ db = firestore.client()
 def home():
     return {"status": "Risk Engine Online"}
 
-@app.post("/predict-and-route")
+@app.post("/predict-and-route/")
 async def predict_and_route(request: ShipmentRequest):
     try:
         # 1. Pull data from Firestore (Scenario script updates this)
